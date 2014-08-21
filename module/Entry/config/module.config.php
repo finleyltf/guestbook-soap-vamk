@@ -6,15 +6,17 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Entry\Controller\Entry' => 'Entry\Controller\EntryController',
+            'Entry\Controller\SoapHandler' => 'Entry\Controller\SoapHandlerController',
         ),
     ),
     'router' => array(
         'routes' => array(
+
             'entry' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/entry',
+                    'route'    => '/entry[/][:action][/:id]',
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
@@ -42,6 +44,38 @@ return array(
                         ),
                     ),
                 ),
+            ),
+
+            'soaphandler' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'       => '/soaphandler[/][:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults'    => array(
+                        'controller' => 'Entry\Controller\SoapHandler',
+                        'action'     => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                // so that it will accept the ?wsdl if requested - else it redirects as a bad route
+                'child_routes' => array(
+                    'default' => array(
+                        'type'  => 'Segment',
+                        'options' => array(
+                            'route' => '/[:wsdl]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+
             ),
         ),
     ),
