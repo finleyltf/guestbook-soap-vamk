@@ -46,17 +46,63 @@ class API
      */
     public function getEntryByName($guestName)
     {
-//        $entry = $this->getEntityManager()->getRepository('Entry\Entity\Entry')->findBy(array('guestName' => $guestName));
-        $entry = 'the guestName is: ' . $guestName ;
+//        $entry = $this->getEntityManager()->getRepository('Entry\Entity\Entry')->findBy(array('guest_name' => $guestName));
+//        $phoneNumber = $entry->getPhoneNumber();
+//        $imageName = $entry->getImage();
+
+        $entry = $this->getEntityManager()->getRepository('Entry\Entity\Entry')->findOneBy(array("guestName" => $guestName));
+        $imageName = $entry->getImage();
+
+        // get image content
+        $imageURL = getcwd() . '/public/img/uploads/' . $imageName;
+        $imageContent =  file_get_contents($imageURL);
+
+        $imageData = base64_encode($imageContent);
+
+        $entry->setImage($imageData);
+
         return $entry;
+    }
+
+    /**
+     * Get all entries from the guestbook
+     * @param int $id
+     * @return mixed
+     */
+    public function getById($id)
+    {
+        return array(
+            'entries' => $this->getEntityManager()->find('Entry\Entity\Entry', $id)
+        );
     }
 
 
     /**
-     * Add an entry
+     * Get image of an entry
      * @param string $guestName
-     * @param string $phoneNumber
-     * @param string $image
+     * @return mixed
      */
+    public function getImage($guestName)
+    {
+
+
+        $entry = $this->getEntityManager()->getRepository('Entry\Entity\Entry')->findOneBy(array("guestName" => $guestName));
+//        $phoneNumber = $entry->getPhoneNumber();
+        $imageName = $entry->getImage();
+
+//        echo '<pre>';
+//        var_dump($imageName);
+//        echo '</pre>';die;
+
+        // get image content
+        $imageURL = getcwd() . '/public/img/uploads/' . $imageName;
+        $imageContent =  file_get_contents($imageURL);
+
+        $imageData = base64_encode($imageContent);
+
+        return $imageData;
+
+
+    }
 
 }

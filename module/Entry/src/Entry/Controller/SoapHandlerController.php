@@ -65,14 +65,22 @@ class SoapHandlerController extends AbstractActionController
             'cache_wsdl' => WSDL_CACHE_NONE,
         );
 
-        $client = new Client(null, $options);
+        $client = new Client($this->_WSDL_URI, $options);
 
 //        $client = new Client('http://guestbook-soap.local/handler');
 
 
 //        $result = $client->getAll();
-        $result = $client->getEntryByName("Mike Nick");
+        $result = $client->getEntryByName("Michael Jackson");
+//        $result = $client->getImage("Lin Tefu");
+//        $result = $client->getById(3);
 
+//        $src = 'data:image/jpeg;base64,' . $result;
+
+//        echo $result;
+//        echo "</br>";
+
+//        echo '<img src="'.$src.'">';
 
         echo '<pre>';
         var_dump($result);

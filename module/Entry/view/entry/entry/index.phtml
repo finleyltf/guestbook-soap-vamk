@@ -1,3 +1,87 @@
-<strong>Module:</strong>        ZendSkeletonModule &raquo;
-<strong>Controller:</strong>    Skeleton &raquo;
-<strong>Action:</strong>        index
+<?php
+$title = 'Welcome to the Guestbook!';
+$this->headTitle($title);
+?>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <!--<h2>--><?php //echo $this->escapeHtml($title); ?><!--</h2>-->
+            <h2><?php echo $title; ?></h2>
+
+            <hr>
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <!-- guestbook -->
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <?php foreach ($entries as $entry): ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+
+                                        <!-- image -->
+                                        <div class="span1">
+                                            <img
+                                                src="<?= $this->basePath() . '/img/uploads/' . $entry->image ?>"
+                                                class="img-circle" height=""
+                                                width="140"> <!-- 这里还可以用width手动控制大小 height不行 -->
+                                        </div>
+
+                                        <!-- guest name -->
+                                        <div class="row-fluid post-content">
+                                            <br>
+
+                                            <div class="row-fluid">
+                                                <div class="review span6">
+                                                    <blockquote>
+                                                        <p class=""><?php echo $entry->guestName ?></p>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <!-- content of the post: mainly review of the post -->
+                                        <div class="row-fluid post-content">
+                                            <br>
+
+                                            <div class="row-fluid">
+                                                <div class="review span6">
+                                                    <blockquote>
+                                                        <p class=""><?php echo $entry->phoneNumber ?></p>
+                                                    </blockquote>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <hr>
+                            <?php endforeach; ?>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
